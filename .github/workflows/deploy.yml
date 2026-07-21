@@ -1,0 +1,66 @@
+# ============================================================
+#  Membangun & menerbitkan website GoPlafon secara otomatis.
+#
+#  Cara kerjanya: setiap kali ada perubahan disimpan di GitHub,
+#  robot GitHub akan membangun ulang website lalu menerbitkannya
+#  ke goplafon.my.id — tanpa perlu membuka Terminal.
+#  Prosesnya sekitar 2 menit.
+# ============================================================
+name: Bangun & terbitkan website
+
+on:
+  # jalan otomatis setiap ada perubahan di cabang utama
+  push:
+    branches: [main]
+  # bisa juga dijalankan manual dari tab "Actions"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# kalau ada dua perubahan beruntun, selesaikan satu per satu
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  bangun:
+    name: Bangun website
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil kode terbaru
+        uses: actions/checkout@v4
+
+      - name: Siapkan Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Pasang paket
+        run: npm ci
+
+      - name: Bangun halaman statis
+        run: npm run build
+
+      - name: Siapkan GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Unggah hasil build
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  terbitkan:
+    name: Terbitkan ke goplafon.my.id
+    needs: bangun
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Terbitkan
+        id: deployment
+        uses: actions/deploy-pages@v4

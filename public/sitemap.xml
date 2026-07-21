@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Peta situs GoPlafon.
+  Situs ini satu halaman, jadi hanya berisi satu alamat (beranda).
+  GANTI "https://goplafon.my.id/" di bawah bila nanti memakai domain lain,
+  dan perbarui tanggal <lastmod> setiap kali isi halaman diubah.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://goplafon.my.id/</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

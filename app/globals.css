@@ -1,0 +1,97 @@
+/* ==========================================================
+   GoPlafon — gaya utama
+   Dibangun di atas HeroUI v3. Baris di bawah ini sudah memuat
+   Tailwind CSS v4 sekaligus seluruh gaya komponen HeroUI.
+   ========================================================== */
+@import "@heroui/styles/css";
+
+/* ----------------------------------------------------------
+   WARNA MEREK GOPLAFON
+   Warna navy dipasang sebagai warna "primary" HeroUI, sehingga
+   seluruh komponen (tombol, chip, dll) otomatis mengikuti.
+   Ubah nilai di sini kalau ingin ganti warna seluruh halaman.
+   ---------------------------------------------------------- */
+:root {
+  --gp-navy: #243c5a;
+  --gp-navy-tua: #1a2c43;
+  --gp-navy-muda: #35547a;
+  --gp-wa: #25d366;
+  --gp-wa-tua: #1da851;
+  --gp-emas: #ffd98a;
+
+  /* menimpa token tema HeroUI */
+  --primary: var(--gp-navy);
+  --primary-hover: var(--gp-navy-muda);
+  --primary-foreground: #ffffff;
+}
+
+@theme inline {
+  --font-sans: var(--font-poppins);
+}
+
+body {
+  font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  background: #f1f3f6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* jarak agar judul tidak tertutup header saat diklik dari menu */
+section[id] {
+  scroll-margin-top: 88px;
+}
+
+/* ----------------------------------------------------------
+   TOMBOL WHATSAPP
+   HeroUI tidak punya warna hijau WhatsApp bawaan, jadi dibuat
+   sebagai kelas tersendiri yang menimpa varian tombolnya.
+   ---------------------------------------------------------- */
+.tombol-wa {
+  background: var(--gp-wa) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+}
+
+.tombol-wa:hover {
+  background: var(--gp-wa-tua) !important;
+}
+
+/* ----------------------------------------------------------
+   HERO — lapisan gelap agar teks putih tetap terbaca
+   ---------------------------------------------------------- */
+.hero-lapisan::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 32, 48, 0.72) 0%,
+    rgba(20, 32, 48, 0.55) 45%,
+    rgba(20, 32, 48, 0.82) 100%
+  );
+}
+
+/* ----------------------------------------------------------
+   HORMATI PENGGUNA YANG MEMATIKAN ANIMASI
+
+   PENTING: jangan memakai `animation: none`. HeroUI/React Aria
+   menunggu sinyal "animasi selesai" sebelum melepas komponen
+   seperti jendela foto. Kalau animasinya dimatikan total, sinyal
+   itu tidak pernah datang dan jendela foto tidak bisa ditutup.
+   Karena itu animasinya tetap ada, hanya dipercepat sampai tak
+   terasa — hasilnya sama bagi pengguna, tapi tetap aman.
+   ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
