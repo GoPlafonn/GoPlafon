@@ -1,7 +1,0 @@
-# robots.txt GoPlafon
-# Mengizinkan semua mesin pencari mengindeks seluruh halaman.
-User-agent: *
-Allow: /
-
-# Alamat sitemap. Ubah bila suatu saat pindah domain.
-Sitemap: https://goplafon.my.id/sitemap.xml
